@@ -105,51 +105,54 @@ Citizen.CreateThread(function()
             local coords       = GetEntityCoords(player)
             local coordsDist   = vector3(coords.x, coords.y, coords.z)
 
-            for _, locationConfig in pairs (Config.Locations) do
+            if not isEntityDead then
+                for _, locationConfig in pairs (Config.Locations) do
 
-                local enterCoords   = vector3(locationConfig.EnterCoords.x, locationConfig.EnterCoords.y, locationConfig.EnterCoords.z)
-                local exitCoords    = vector3(locationConfig.ExitCoords.x, locationConfig.ExitCoords.y, locationConfig.ExitCoords.z)
-
-                if #(coordsDist - enterCoords) <= locationConfig.TeleportActionDistance then
-                    sleep = false
-
-                    local promptGroup, promptList = GetPromptData()
-
-                    local label = CreateVarString(10, 'LITERAL_STRING', locationConfig.PromptFooterLabel)
-                    PromptSetActiveGroupThisFrame(promptGroup, label)
-
-                    PromptSetText(promptList, CreateVarString(10, 'LITERAL_STRING', Locales['ENTER']))
-
-                    if PromptHasHoldModeCompleted(promptList) then
-                        local hasRequiredJob = HasRequiredJob(locationConfig.Jobs)
-
-                        if hasRequiredJob then 
-                            StartTeleportationProcess(locationConfig.ExitCoords)
-                        else
-                            SendNotification(nil, Locales['NO_PERMISSIONS'], 3000)
+                    local enterCoords   = vector3(locationConfig.EnterCoords.x, locationConfig.EnterCoords.y, locationConfig.EnterCoords.z)
+                    local exitCoords    = vector3(locationConfig.ExitCoords.x, locationConfig.ExitCoords.y, locationConfig.ExitCoords.z)
+    
+                    if #(coordsDist - enterCoords) <= locationConfig.TeleportActionDistance then
+                        sleep = false
+    
+                        local promptGroup, promptList = GetPromptData()
+    
+                        local label = CreateVarString(10, 'LITERAL_STRING', locationConfig.PromptFooterLabel)
+                        PromptSetActiveGroupThisFrame(promptGroup, label)
+    
+                        PromptSetText(promptList, CreateVarString(10, 'LITERAL_STRING', Locales['ENTER']))
+    
+                        if PromptHasHoldModeCompleted(promptList) then
+                            local hasRequiredJob = HasRequiredJob(locationConfig.Jobs)
+    
+                            if hasRequiredJob then 
+                                StartTeleportationProcess(locationConfig.ExitCoords)
+                            else
+                                SendNotification(nil, Locales['NO_PERMISSIONS'], "error")
+                            end
+    
+                            Wait(2000)
                         end
-
-                        Wait(2000)
+        
+    
                     end
     
-
-                end
-
-                if #(coordsDist - exitCoords) <= locationConfig.TeleportActionDistance then
-                    sleep = false
-
-                    local promptGroup, promptList = GetPromptData()
-
-                    local label = CreateVarString(10, 'LITERAL_STRING', locationConfig.PromptFooterLabel)
-                    PromptSetActiveGroupThisFrame(promptGroup, label)
-
-                    PromptSetText(promptList, CreateVarString(10, 'LITERAL_STRING', Locales['LEAVE']))
-
-                    if PromptHasHoldModeCompleted(promptList) then
-                        StartTeleportationProcess(locationConfig.EnterCoords)
-                        Wait(3000)
-                    end
+                    if #(coordsDist - exitCoords) <= locationConfig.TeleportActionDistance then
+                        sleep = false
     
+                        local promptGroup, promptList = GetPromptData()
+    
+                        local label = CreateVarString(10, 'LITERAL_STRING', locationConfig.PromptFooterLabel)
+                        PromptSetActiveGroupThisFrame(promptGroup, label)
+    
+                        PromptSetText(promptList, CreateVarString(10, 'LITERAL_STRING', Locales['LEAVE']))
+    
+                        if PromptHasHoldModeCompleted(promptList) then
+                            StartTeleportationProcess(locationConfig.EnterCoords)
+                            Wait(3000)
+                        end
+        
+    
+                    end
 
                 end
 
@@ -164,5 +167,5 @@ Citizen.CreateThread(function()
 
     end
 
-
 end)
+
