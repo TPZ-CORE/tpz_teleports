@@ -143,7 +143,7 @@ Citizen.CreateThread(function()
                     PromptSetText(promptList, CreateVarString(10, 'LITERAL_STRING', Locales['LEAVE']))
 
                     if PromptHasHoldModeCompleted(promptList) then
-                        TriggerEvent('tpz_teleports:StartTeleportationProcess', locationConfig.EnterCoords)
+                        StartTeleportationProcess(locationConfig.EnterCoords)
                         Wait(3000)
                     end
     
