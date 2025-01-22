@@ -8,6 +8,5 @@ version '1.0.0'
 
 shared_scripts { "config.lua", "locales.lua" }
 client_scripts { 'client/*.lua' }
-server_script { 'server/*.lua' }
 
 lua54 'yes'
