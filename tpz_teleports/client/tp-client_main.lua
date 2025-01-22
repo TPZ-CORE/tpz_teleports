@@ -3,19 +3,13 @@
 local pcoords = nil
 local pdead = nil
 
+local PlayerJob = nil
 
 --[[ ------------------------------------------------
-   Functions
+   Local Functions
 ]]---------------------------------------------------
 
-
-
---[[ ------------------------------------------------
-   Events
-]]---------------------------------------------------
-
-RegisterNetEvent('tpz_teleports:StartTeleportationProcess')
-AddEventHandler('tpz_teleports:StartTeleportationProcess', function(coords)
+local function StartTeleportationProcess(coords)
     
     while not IsScreenFadedOut() do
         Wait(50)
@@ -28,6 +22,46 @@ AddEventHandler('tpz_teleports:StartTeleportationProcess', function(coords)
 
     Wait(5000)
     DoScreenFadeIn(2000)
+end
+
+--[[ ------------------------------------------------
+   Base Events 
+]]---------------------------------------------------
+
+-- @tpz_core:isPlayerReady : When a character is selected.
+AddEventHandler("tpz_core:isPlayerReady", function()
+    
+    -- Keep in mind, the following data will be valid ONLY if the character has been selected.
+    TriggerEvent("tpz_core:ExecuteServerCallBack", "tpz_core:getPlayerData", function(data)
+
+        if data == nil then 
+            return
+        end
+
+        PlayerJob = data.job
+    end)
+
+end)
+
+if Config.DevMode then
+    
+    -- Keep in mind, the following data will be valid ONLY if the character has been selected.
+    TriggerEvent("tpz_core:ExecuteServerCallBack", "tpz_core:getPlayerData", function(data)
+
+        if data == nil then 
+            return
+        end
+
+        PlayerJob = data.job
+    end)
+
+end
+
+-- @param job
+-- @param jobGrade
+RegisterNetEvent("tpz_core:getPlayerJob")
+AddEventHandler("tpz_core:getPlayerJob", function(data)
+    PlayerJob = data.job
 end)
 
 --[[ ------------------------------------------------
