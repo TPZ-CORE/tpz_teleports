@@ -7,6 +7,7 @@ Config.PromptKey = 0xCEFD9220
    Locations
 ]]---------------------------------------------------
 
+-- Set Config.Locations = {} if there are no locations.
 Config.Locations = { 
 
     {
