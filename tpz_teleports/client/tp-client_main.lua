@@ -37,7 +37,7 @@ local function StartTeleportationProcess(coords)
 
     Wait(2000)
 
-    exports.tpz_core.rClientAPI().teleportToCoords( coords.x, coords.y, coords.z, coords.h)
+    exports.tpz_core.client().teleportToCoords( coords.x, coords.y, coords.z, coords.h)
 
     Wait(5000)
     DoScreenFadeIn(2000)
