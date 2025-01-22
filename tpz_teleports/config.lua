@@ -34,3 +34,22 @@ Config.Locations = {
     },
 
 }
+
+--[[ ------------------------------------------------
+   Notifications
+]]---------------------------------------------------
+
+-- @param source : returns the player target source, if the source is null, it is client side.
+-- @param message : returns the message to be displayed on the notification (string)
+-- @param type : returns success, error, info (string)
+function SendNotification(source, message, type)
+    local _source = source
+
+    if _source then -- server to client
+        TriggerClientEvent('tpz_core:sendRightTipNotification', _source, message, 3000)
+        
+    else -- client to client.
+        TriggerEvent('tpz_core:sendRightTipNotification', message, 3000)
+    end
+
+end
