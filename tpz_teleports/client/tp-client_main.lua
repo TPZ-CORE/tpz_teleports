@@ -27,7 +27,7 @@ local function HasRequiredJob(jobs)
             return true
         end
     end
-
+    
     return false
 
 end
@@ -125,8 +125,15 @@ Citizen.CreateThread(function()
                     PromptSetText(promptList, CreateVarString(10, 'LITERAL_STRING', Locales['ENTER']))
 
                     if PromptHasHoldModeCompleted(promptList) then
-                        TriggerServerEvent('tpz_teleports:onEntrance', locationConfig.ExitCoords, _ )
-                        Wait(3000)
+                        local hasRequiredJob = HasRequiredJob(locationConfig.Jobs)
+
+                        if hasRequiredJob then 
+                            StartTeleportationProcess(locationConfig.ExitCoords)
+                        else
+                            SendNotification(nil, Locales['NO_PERMISSIONS'], 3000)
+                        end
+
+                        Wait(2000)
                     end
     
 
