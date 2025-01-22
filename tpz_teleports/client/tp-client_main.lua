@@ -1,8 +1,4 @@
 
-
-local pcoords = nil
-local pdead = nil
-
 local PlayerJob = nil
 
 --[[ ------------------------------------------------
@@ -160,6 +156,10 @@ Citizen.CreateThread(function()
 
             end
 
+        end
+
+        if sleep then
+            Wait(1500)
         end
 
     end
