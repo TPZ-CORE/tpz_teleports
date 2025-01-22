@@ -41,14 +41,3 @@ AddEventHandler('onResourceStop', function(resourceName)
     Prompts     = nil
     PromptsList = nil
 end)
-
---[[-------------------------------------------------------
- General Functions
-]]---------------------------------------------------------
-
--- @GetTableLength returns the length of a table.
-GetTableLength = function(T)
-    local count = 0
-    for _ in pairs(T) do count = count + 1 end
-    return count
-end
