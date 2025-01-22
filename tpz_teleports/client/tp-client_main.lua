@@ -9,6 +9,29 @@ local PlayerJob = nil
    Local Functions
 ]]---------------------------------------------------
 
+-- @GetTableLength returns the length of a table.
+local function GetTableLength(T)
+    local count = 0
+    for _ in pairs(T) do count = count + 1 end
+    return count
+end
+
+local function HasRequiredJob(jobs)
+    if ( not jobs ) or ( jobs and GetTableLength(jobs) < 0 ) then
+        return true
+    end
+
+    for index, job in pairs (jobs) do
+
+        if job == PlayerJob then
+            return true
+        end
+    end
+
+    return false
+
+end
+
 local function StartTeleportationProcess(coords)
     
     while not IsScreenFadedOut() do
