@@ -1,5 +1,6 @@
 Config = {}
 
+Config.DevMode   = false
 Config.PromptKey = 0xCEFD9220
 
 --[[ ------------------------------------------------
