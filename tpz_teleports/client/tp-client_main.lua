@@ -37,7 +37,7 @@ local function StartTeleportationProcess(coords)
 
     Wait(2000)
 
-    exports.tpz_core.client().teleportToCoords( coords.x, coords.y, coords.z, coords.h)
+    exports.tpz_core.getCoreAPI().teleportToCoords( coords.x, coords.y, coords.z, coords.h)
 
     Wait(5000)
     DoScreenFadeIn(2000)
@@ -49,31 +49,34 @@ end
 
 -- @tpz_core:isPlayerReady : When a character is selected.
 AddEventHandler("tpz_core:isPlayerReady", function()
-    
-    -- Keep in mind, the following data will be valid ONLY if the character has been selected.
-    TriggerEvent("tpz_core:ExecuteServerCallBack", "tpz_core:getPlayerData", function(data)
 
-        if data == nil then 
-            return
-        end
+	Wait(2000)
 
-        PlayerJob = data.job
-    end)
+	local data = exports.tpz_core:getCoreAPI().getPlayerClientData()
 
+	if data == nil then
+		return
+	end
+
+	PlayerJob = data.job
+      
 end)
 
+-- Gets the player job when devmode set to true.
 if Config.DevMode then
-    
-    -- Keep in mind, the following data will be valid ONLY if the character has been selected.
-    TriggerEvent("tpz_core:ExecuteServerCallBack", "tpz_core:getPlayerData", function(data)
+    Citizen.CreateThread(function ()
 
-        if data == nil then 
-            return
-        end
+        Wait(2000)
 
-        PlayerJob = data.job
+        local data = exports.tpz_core:getCoreAPI().getPlayerClientData()
+
+		if data == nil then
+			return
+		end
+
+		PlayerJob = data.job
+
     end)
-
 end
 
 -- @param job
