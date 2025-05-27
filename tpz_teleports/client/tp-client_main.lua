@@ -1,19 +1,13 @@
 
+local TPZ = exports.tpz_core.getCoreAPI()
 local PlayerJob = nil
 
 --[[ ------------------------------------------------
    Local Functions
 ]]---------------------------------------------------
 
--- @GetTableLength returns the length of a table.
-local function GetTableLength(T)
-    local count = 0
-    for _ in pairs(T) do count = count + 1 end
-    return count
-end
-
 local function HasRequiredJob(jobs)
-    if ( not jobs ) or ( jobs and GetTableLength(jobs) < 0 ) then
+    if ( not jobs ) or ( jobs and TPZ.GetTableLength(jobs) < 0 ) then
         return true
     end
 
@@ -37,7 +31,7 @@ local function StartTeleportationProcess(coords)
 
     Wait(2000)
 
-    exports.tpz_core.getCoreAPI().teleportToCoords( coords.x, coords.y, coords.z, coords.h)
+    exports.tpz_core.getCoreAPI().TeleportToCoords( coords.x, coords.y, coords.z, coords.h)
 
     Wait(5000)
     DoScreenFadeIn(2000)
@@ -100,7 +94,7 @@ Citizen.CreateThread(function()
 
         local sleep = true
 
-        if GetTableLength(Config.Locations) > 0 then
+        if TPZ.GetTableLength(Config.Locations) > 0 then
 
             local player       = PlayerPedId()
             local isEntityDead = IsEntityDead(player)
